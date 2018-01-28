@@ -1,0 +1,32 @@
+﻿using System.Security.Principal;
+using jwt_auth_service.Filters;
+using jwt_auth_service.Helpers;
+using Microsoft.AspNetCore.Mvc;
+
+namespace jwt_auth_service.Controllers
+{
+    public class AuthController : Controller
+    {
+        private readonly JwtHelper _jwtHelper;
+
+        public AuthController(JwtHelper jwtHelper)
+        {
+            this._jwtHelper = jwtHelper;
+        }
+
+        [AuthorizeRolesAttribute(Role.TeamRole)]
+        public IActionResult Authenticate()
+        {
+            var user = WindowsIdentity.GetCurrent();
+            var token = _jwtHelper.GenerateJwtToken(user);
+            return Json(token);
+        }
+
+        public IActionResult IsAuthorized()
+        {
+            var token = Request.Headers["authorization: Bearer"];
+            var isValidToken = _jwtHelper.IsJwtValid(token);
+            return Json(isValidToken);
+        }
+    }
+}
