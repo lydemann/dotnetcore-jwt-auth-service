@@ -13,7 +13,7 @@ namespace jwt_auth_service.Helpers
 
         private static IEnumerable<string> GetRolesFromAppSettings(Role role)
         {
-            throw new NotImplementedException();
+            return new List<string>();
         }
     }
 }

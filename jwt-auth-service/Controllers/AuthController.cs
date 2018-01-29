@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace jwt_auth_service.Controllers
 {
+    [AuthorizeRoles(Role.TeamRole)]
+    [Route("api/[controller]")]
     public class AuthController : Controller
     {
         private readonly JwtHelper _jwtHelper;
@@ -14,7 +16,8 @@ namespace jwt_auth_service.Controllers
             this._jwtHelper = jwtHelper;
         }
 
-        [AuthorizeRolesAttribute(Role.TeamRole)]
+
+        [HttpGet("Authenticate")]
         public IActionResult Authenticate()
         {
             var user = WindowsIdentity.GetCurrent();
@@ -22,11 +25,13 @@ namespace jwt_auth_service.Controllers
             return Json(token);
         }
 
+        // TODO: authorize on valid bearer token
+        [HttpGet("IsAuthorized")]
         public IActionResult IsAuthorized()
         {
             var token = Request.Headers["authorization: Bearer"];
-            var isValidToken = _jwtHelper.IsJwtValid(token);
-            return Json(isValidToken);
+            //var isValidToken = _jwtHelper.IsJwtValid(token);
+            return new OkResult();
         }
     }
 }

@@ -16,24 +16,24 @@ namespace jwt_auth_service.Filters
     {
         public AuthorizeRolesAttribute(params Role[] roles)
         {
-            var roleNames = String.Empty;
+            //var roleNames = String.Empty;
 
-            if (roles.Length == 1)
-            {
-                roleNames = RolesHelper.GetRoles(roles[0]);
-            }
+            //if (roles.Length == 1)
+            //{
+            //    roleNames = RolesHelper.GetRoles(roles[0]);
+            //}
 
-            if (roles.Length > 1)
-            {
-                roleNames = RolesHelper.GetRoles(roles[0]);
+            //if (roles.Length > 1)
+            //{
+            //    roleNames = RolesHelper.GetRoles(roles[0]);
 
-                for (var i = 1; i < roles.Length; i++)
-                {
-                    roleNames += "," + roles[i];
-                }
-            }
+            //    for (var i = 1; i < roles.Length; i++)
+            //    {
+            //        roleNames += "," + roles[i];
+            //    }
+            //}
 
-            Roles = roleNames;
+            Roles = "teamrole";
         }
     }
 }
